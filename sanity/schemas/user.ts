@@ -1,3 +1,4 @@
+import { title } from 'process';
 import { defineField, defineType } from 'sanity';
 
 export default defineType({
@@ -62,4 +63,10 @@ export default defineType({
       validation: (Rule) => Rule.unique(),
     }),
   ],
+  preview: {
+    select: {
+      title: 'name',
+      subtitle: 'username',
+    },
+  },
 });

@@ -1,4 +1,6 @@
-import {defineField, defineType} from 'sanity'
+import { Rule } from './../../node_modules/pluralize-esm/src/index';
+import { title } from 'process';
+import { defineField, defineType } from 'sanity';
 
 export default defineType({
   name: 'post',
@@ -6,67 +8,67 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-    }),
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
-    }),
-    defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: {type: 'author'},
+      to: [{ type: 'user' }],
     }),
     defineField({
-      name: 'mainImage',
-      title: 'Main image',
+      name: 'photo',
+      title: 'Photo',
       type: 'image',
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative Text',
-        }
-      ]
     }),
     defineField({
-      name: 'categories',
-      title: 'Categories',
+      name: 'likes',
+      title: 'Likes',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'user' }],
+        },
+      ],
+      validation: (Rule) => Rule.unique(),
     }),
     defineField({
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
+      name: 'comments',
+      title: 'Comments',
+      type: 'array',
+      of: [
+        {
+          name: 'comment',
+          title: 'Comment',
+          type: 'document',
+          fields: [
+            {
+              name: 'author',
+              title: 'Author',
+              type: 'reference',
+              to: [{ type: 'user' }],
+            },
+            {
+              name: 'comment',
+              title: 'Comment',
+              type: 'string',
+            },
+          ],
+        },
+      ],
     }),
   ],
-
   preview: {
     select: {
-      title: 'title',
-      author: 'author.name',
-      media: 'mainImage',
+      title: 'comments.0.comment',
+      authorName: 'author.name',
+      media: 'photo',
     },
     prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
+      const { title, authorName, media } = selection;
+      return {
+        title,
+        subtitle: `by ${authorName}`,
+        media,
+      };
     },
   },
-})
+});
