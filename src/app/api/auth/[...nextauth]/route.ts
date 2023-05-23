@@ -1,3 +1,4 @@
+import { addUser, OAuthUser } from '@/libs/server/user';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -11,6 +12,19 @@ export const authOptions: NextAuthOptions = {
     // ...add more providers here
   ],
   callbacks: {
+    async signIn({ user: { id, email, name, image } }) {
+      if (!email) return false;
+
+      const OAuthUser: OAuthUser = {
+        id,
+        username: email.split('@')[0] || '',
+        email,
+        name,
+        image,
+      };
+      addUser(OAuthUser);
+      return true;
+    },
     async session({ session }) {
       console.log(session);
       const user = session?.user;
