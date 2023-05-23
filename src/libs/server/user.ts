@@ -1,4 +1,4 @@
-import { client } from '../../../sanity/lib/client';
+import { client } from '@/sanity/lib/client';
 import { Session } from 'next-auth';
 
 export type OAuthUser = {
@@ -13,8 +13,8 @@ export async function addUser({ id, username, email, name, image }: OAuthUser) {
     email,
     name,
     image,
-    follwing: [],
-    follwers: [],
+    following: [],
+    followers: [],
     bookmarks: [],
   });
 }

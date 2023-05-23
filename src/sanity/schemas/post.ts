@@ -1,4 +1,4 @@
-import { Rule } from './../../node_modules/pluralize-esm/src/index';
+import { Rule } from 'pluralize-esm/src';
 import { title } from 'process';
 import { defineField, defineType } from 'sanity';
 
