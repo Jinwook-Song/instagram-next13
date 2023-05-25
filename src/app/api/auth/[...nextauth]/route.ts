@@ -19,14 +19,13 @@ export const authOptions: NextAuthOptions = {
         id,
         username: email.split('@')[0] || '',
         email,
-        name,
+        name: name!,
         image,
       };
       addUser(OAuthUser);
       return true;
     },
     async session({ session }) {
-      console.log(session);
       const user = session?.user;
       if (user) {
         session.user = {

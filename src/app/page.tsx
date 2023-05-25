@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from './api/auth/[...nextauth]/route';
 
+// SSR로 동작
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
@@ -14,7 +15,7 @@ export default async function HomePage() {
   }
 
   return (
-    <section className='flex flex-col md:flex-row max-w-[850px] mx-auto p-4'>
+    <section className='flex flex-col md:flex-row max-w-4xl mx-auto p-4'>
       <div className='basis-3/4'>
         <FollowingBar />
         <PostList />
