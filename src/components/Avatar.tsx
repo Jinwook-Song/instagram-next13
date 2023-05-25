@@ -20,7 +20,7 @@ export default function Avatar({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className={cls(
-          'rounded-full bg-white',
+          'rounded-full bg-white aspect-square object-cover',
           size === 'sm' ? 'w-[30px] p-[2px]' : 'w-16 p-1'
         )}
         src={image ?? undefined}
