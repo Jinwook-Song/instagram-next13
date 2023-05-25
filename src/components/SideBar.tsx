@@ -7,16 +7,20 @@ type Props = {
 export default function SideBar({ user: { name, username, image } }: Props) {
   return (
     <>
-      <div>
+      <div className='flex items-center'>
         {image && <Avatar image={image} />}
-        <p>{username}</p>
-        <p>{name}</p>
+        <div className='ml-4'>
+          <p className='font-semibold'>{username}</p>
+          <p className='text-lg text-neutral-500 leading-[0.8]'>{name}</p>
+        </div>
       </div>
-      <p>
+      <p className='text-sm text-neutral-500 mt-8'>
         About • Help • Press • API • Jobs • Privacy • Terms • Location •
         Language
       </p>
-      <p>@Copyright INSTAGRAM from META</p>
+      <p className='font-semibold text-sm mt-8 text-neutral-500'>
+        @Copyright INSTAGRAM from META
+      </p>
     </>
   );
 }
