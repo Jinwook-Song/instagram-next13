@@ -28,6 +28,7 @@ export default function RootLayout({
           </main>
           <footer></footer>
         </AuthContext>
+        <div id='modal' />
       </body>
     </html>
   );

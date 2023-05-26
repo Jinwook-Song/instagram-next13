@@ -1,8 +1,13 @@
+'use client';
+
 import { SimplePost } from '@/model/post';
 import Image from 'next/image';
+import { useState } from 'react';
 import ActionBar from './ActionBar';
 import Avatar from './Avatar';
 import CommentForm from './CommentForm';
+import PostModal from './PostModal';
+import ModalPortal from './ui/ModalPortal';
 
 type Props = {
   post: SimplePost;
@@ -11,6 +16,8 @@ type Props = {
 
 export default function PostListCard({ post, priority = false }: Props) {
   const { userImage, username, image } = post;
+
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <article className='rounded-lg shadow-md border border-gray-200'>
@@ -25,9 +32,15 @@ export default function PostListCard({ post, priority = false }: Props) {
         width={500}
         height={500}
         priority={priority}
+        onClick={() => setShowModal(true)}
       />
       <ActionBar post={post} />
       <CommentForm />
+      {showModal && (
+        <ModalPortal>
+          <PostModal onClose={() => setShowModal(false)}>포스트</PostModal>
+        </ModalPortal>
+      )}
     </article>
   );
 }
