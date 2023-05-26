@@ -6,9 +6,10 @@ import CommentForm from './CommentForm';
 
 type Props = {
   post: SimplePost;
+  priority?: boolean;
 };
 
-export default function PostListCard({ post }: Props) {
+export default function PostListCard({ post, priority = false }: Props) {
   const { userImage, username, image } = post;
 
   return (
@@ -23,6 +24,7 @@ export default function PostListCard({ post }: Props) {
         alt={`photo by ${username}`}
         width={500}
         height={500}
+        priority={priority}
       />
       <ActionBar post={post} />
       <CommentForm />
