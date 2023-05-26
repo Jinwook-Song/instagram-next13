@@ -3,7 +3,7 @@
 import { SimplePost } from '@/model/post';
 import { GridLoader } from 'react-spinners';
 import useSwr from 'swr';
-import PostListCard from './ui/PostListCard';
+import PostListCard from './PostListCard';
 
 export default function PostList() {
   const { data: posts, isLoading: loading } =
