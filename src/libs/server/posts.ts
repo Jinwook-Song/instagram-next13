@@ -21,7 +21,7 @@ export async function getFollowingPostsOf(username: string) {
 const simplePostProjection = `
   ...,
   "username": author->username,
-  "userImage": author->imgae,
+  "userImage": author->image,
   "image": photo,
   "likes": likes[]->username,
   "text": comments[0].comment,

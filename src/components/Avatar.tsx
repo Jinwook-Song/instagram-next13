@@ -2,7 +2,7 @@ import { cls } from '@/libs/client/util';
 
 type Props = {
   image?: string | null;
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
   highlight?: boolean;
 };
 
@@ -12,7 +12,7 @@ type Props = {
  */
 export default function Avatar({
   image,
-  size = 'md',
+  size = 'lg',
   highlight = false,
 }: Props) {
   return (
@@ -21,7 +21,11 @@ export default function Avatar({
       <img
         className={cls(
           'rounded-full bg-white aspect-square object-cover',
-          size === 'sm' ? 'w-[30px] p-[2px]' : 'w-16 p-1'
+          size === 'sm'
+            ? 'w-[30px] p-[2px]'
+            : size === 'md'
+            ? 'w-[42px] p-[3px]'
+            : 'w-16 p-[4px]'
         )}
         src={image ?? undefined}
         referrerPolicy='no-referrer'
@@ -37,6 +41,7 @@ function getContainerStyle({ size, highlight }: Omit<Props, 'image'>): string {
   const highlightStyle = highlight
     ? 'bg-gradient-to-br from-amber-300 via-rose-500 to-fuchsia-600'
     : '';
-  const sizeStyle = size === 'sm' ? 'w-8' : 'w-[68px]';
+  const sizeStyle =
+    size === 'sm' ? 'w-8' : size === 'md' ? 'w-[44px]' : 'w-[68px]';
   return cls(base, highlightStyle, sizeStyle);
 }
