@@ -6,6 +6,7 @@ import { useState } from 'react';
 import ActionBar from './ActionBar';
 import Avatar from './Avatar';
 import CommentForm from './CommentForm';
+import PostDetail from './PostDetail';
 import PostModal from './PostModal';
 import ModalPortal from './ui/ModalPortal';
 
@@ -38,7 +39,9 @@ export default function PostListCard({ post, priority = false }: Props) {
       <CommentForm />
       {showModal && (
         <ModalPortal>
-          <PostModal onClose={() => setShowModal(false)}>포스트</PostModal>
+          <PostModal onClose={() => setShowModal(false)}>
+            <PostDetail post={post} />
+          </PostModal>
         </ModalPortal>
       )}
     </article>

@@ -1,4 +1,4 @@
-import { SimplePost } from './../../model/post';
+import { SimplePost, FullPost } from '@/model/post';
 import { client, urlFor } from '@/sanity/lib/client';
 
 /**
@@ -28,4 +28,24 @@ const simplePostProjection = `
   "comments": count(comments),
   "id": _id,
   "createdAt": _createdAt
-`;
+  `;
+
+export async function getPost(id: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && _id == "${id}"][0]{
+        ...,
+        "username": author->username,
+        "userImage": author->image,
+        "image": photo,
+        "likes": likes[]->username,
+        comments[]{comment, "username": author->username, "userImage": author->image},
+        "id": _id,
+        "createdAt": _createdAt
+    }`
+    )
+    .then((post: FullPost) => ({
+      ...post,
+      image: urlFor({ source: post.image }),
+    }));
+}
