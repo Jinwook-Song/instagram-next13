@@ -1,6 +1,13 @@
 import { SimplePost, FullPost } from '@/model/post';
 import { client, urlFor } from '@/sanity/lib/client';
 
+function mapPosts(posts: SimplePost[]) {
+  return posts.map((post) => ({
+    ...post,
+    image: urlFor({ source: post.image }),
+  }));
+}
+
 /**
  *
  * @see https://www.sanity.io/docs/query-cheat-sheet#e82ab8c0925b
@@ -13,9 +20,7 @@ export async function getFollowingPostsOf(username: string) {
     *[_type == "user" && username == "${username}"].following[]._ref]
     | order(_createdAt desc){${simplePostProjection}}`
     )
-    .then((posts: SimplePost[]) =>
-      posts.map((post) => ({ ...post, image: urlFor({ source: post.image }) }))
-    );
+    .then(mapPosts);
 }
 
 const simplePostProjection = `
@@ -48,4 +53,37 @@ export async function getPost(id: string) {
       ...post,
       image: urlFor({ source: post.image }),
     }));
+}
+
+export async function getPostsOf(username: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && author->username == "${username}"]
+    | order(_createdAt desc) {
+      ${simplePostProjection}
+    }`
+    )
+    .then(mapPosts);
+}
+
+export async function getLikedPostsOf(username: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && "${username}" in likes[]->username]
+    | order(_createdAt desc) {
+      ${simplePostProjection}
+    }`
+    )
+    .then(mapPosts);
+}
+
+export async function getSavedPostsOf(username: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && _id in *[_type=="user" && username=="${username}"].bookmarks[]._ref]
+    | order(_createdAt desc) {
+      ${simplePostProjection}
+    }`
+    )
+    .then(mapPosts);
 }
