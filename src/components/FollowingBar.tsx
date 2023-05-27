@@ -11,7 +11,7 @@ export default function FollowingBar() {
   const { data, isLoading: loading, error } = useSWR<DetailUser>('/api/me');
   const users = data?.following;
   return (
-    <section className='w-full min-h-[120px] flex justify-center items-center p-4 rounded-lg shadow-sm shadow-neutral-300 mb-4 overflow-x-scroll'>
+    <section className='w-full min-h-[120px] flex justify-center items-center p-4 rounded-lg shadow-sm shadow-neutral-300 mb-4 overflow-x-scroll relative z-0'>
       {loading ? (
         <PropagateLoader color='hotpink' size={8} />
       ) : (

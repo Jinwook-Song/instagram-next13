@@ -8,6 +8,7 @@ import Avatar from './Avatar';
 import CommentForm from './CommentForm';
 import PostDetail from './PostDetail';
 import PostModal from './PostModal';
+import PostUserAvatar from './PostUserAvatar';
 import ModalPortal from './ui/ModalPortal';
 
 type Props = {
@@ -22,10 +23,7 @@ export default function PostListCard({ post, priority = false }: Props) {
 
   return (
     <article className='rounded-lg shadow-md border border-gray-200'>
-      <div className='flex items-center p-2 gap-x-2'>
-        <Avatar image={userImage} size='md' highlight />
-        <span className='text-gray-900 font-semibold'>{username}</span>
-      </div>
+      <PostUserAvatar image={userImage} username={username} />
       <Image
         className='w-full object-cover aspect-square'
         src={image}
