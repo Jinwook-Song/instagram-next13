@@ -2,7 +2,7 @@ import { cls } from '@/libs/client/util';
 
 type Props = {
   image?: string | null;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   highlight?: boolean;
 };
 
@@ -25,7 +25,9 @@ export default function Avatar({
             ? 'w-[30px] p-[2px]'
             : size === 'md'
             ? 'w-[42px] p-[3px]'
-            : 'w-16 p-[4px]'
+            : size === 'lg'
+            ? 'w-16 p-[4px]'
+            : 'w-[138px] p-[8px]'
         )}
         src={image ?? undefined}
         referrerPolicy='no-referrer'
@@ -42,6 +44,12 @@ function getContainerStyle({ size, highlight }: Omit<Props, 'image'>): string {
     ? 'bg-gradient-to-br from-amber-300 via-rose-500 to-fuchsia-600'
     : '';
   const sizeStyle =
-    size === 'sm' ? 'w-8' : size === 'md' ? 'w-[44px]' : 'w-[68px]';
+    size === 'sm'
+      ? 'w-8'
+      : size === 'md'
+      ? 'w-[44px]'
+      : size === 'lg'
+      ? 'w-[68px]'
+      : 'w-[142px]';
   return cls(base, highlightStyle, sizeStyle);
 }
