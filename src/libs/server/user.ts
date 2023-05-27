@@ -1,3 +1,4 @@
+import { ProfileUser } from '@/model/user';
 import { client } from '@/sanity/lib/client';
 import { Session } from 'next-auth';
 
@@ -38,11 +39,19 @@ export async function searchUsers(keyword?: string) {
   const query = keyword
     ? `&& (name match "*${keyword}*" || username match "*${keyword}*")`
     : ``;
-  return client.fetch(
-    `*[_type == "user" ${query}]{
+  return client
+    .fetch(
+      `*[_type == "user" ${query}]{
       ...,
       "following": count(following),
       "followers": count(followers),
     }`
-  );
+    )
+    .then((users: ProfileUser[]) =>
+      users.map((user) => ({
+        ...user,
+        followers: user.followers ?? 0,
+        following: user.following ?? 0,
+      }))
+    );
 }
