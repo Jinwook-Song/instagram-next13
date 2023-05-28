@@ -10,3 +10,5 @@ export { default as SmileIcon } from './SmileIcon';
 export { default as SendIcon } from './SendIcon';
 export { default as CloseIcon } from './CloseIcon';
 export { default as PostIcon } from './PostIcon';
+export { default as HeartFillIcon } from './HeartFillIcon';
+export { default as BookmarkFillIcon } from './BookmarkFillIcon';

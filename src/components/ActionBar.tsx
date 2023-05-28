@@ -1,6 +1,13 @@
 import { parseDate } from '@/libs/client/util';
 import { SimplePost } from '@/model/post';
-import { BookmarkIcon, HeartIcon } from './ui/icons';
+import { useState } from 'react';
+import {
+  BookmarkFillIcon,
+  BookmarkIcon,
+  HeartFillIcon,
+  HeartIcon,
+} from './ui/icons';
+import ToggleButton from './ui/ToggleButton';
 
 type Props = {
   post: SimplePost;
@@ -8,11 +15,23 @@ type Props = {
 export default function ActionBar({
   post: { likes, username, text, createdAt },
 }: Props) {
+  const [liked, setLiked] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
   return (
     <>
-      <div className='flex justify-between my-2 px-4'>
-        <HeartIcon />
-        <BookmarkIcon />
+      <div className='flex justify-between my-2 px-2'>
+        <ToggleButton
+          toggled={liked}
+          onToggle={setLiked}
+          onIcon={<HeartFillIcon />}
+          offIcon={<HeartIcon />}
+        />
+        <ToggleButton
+          toggled={bookmarked}
+          onToggle={setBookmarked}
+          onIcon={<BookmarkFillIcon />}
+          offIcon={<BookmarkIcon />}
+        />
       </div>
       <div className='px-4 py-1'>
         <p className='text-sm font-semibold mb-2'>{`${likes?.length ?? 0} ${
