@@ -9,3 +9,4 @@ export { default as HeartIcon } from './HeartIcon';
 export { default as SmileIcon } from './SmileIcon';
 export { default as SendIcon } from './SendIcon';
 export { default as CloseIcon } from './CloseIcon';
+export { default as PostIcon } from './PostIcon';

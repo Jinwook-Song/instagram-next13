@@ -1,4 +1,3 @@
-import { TabType } from '@/components/UserPosts';
 import {
   getLikedPostsOf,
   getPostsOf,
@@ -20,7 +19,7 @@ export async function GET(_: NextRequest, context: Context) {
   }
 
   const [username, query] = slug;
-  const tab = query as TabType;
+  const tab = query;
 
   // 함수를 참조하기만 한 상태, 실행 ❌
   let request = getPostsOf;
