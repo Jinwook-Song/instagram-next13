@@ -1,4 +1,4 @@
-import { SearchUser } from '@/model/user';
+import { ProfileUser, SearchUser } from '@/model/user';
 import { client } from '@/sanity/lib/client';
 import { Session } from 'next-auth';
 
@@ -56,7 +56,9 @@ export async function searchUsers(keyword?: string) {
     );
 }
 
-export async function getUserForProfile(username: string) {
+export async function getUserForProfile(
+  username: string
+): Promise<ProfileUser | null> {
   return client
     .fetch(
       `*[_type == "user" && username == "${username}"][0]{
