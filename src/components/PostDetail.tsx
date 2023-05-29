@@ -1,5 +1,7 @@
+import useMe from '@/libs/client/hooks/me';
+import useFullPost from '@/libs/client/hooks/post';
 import usePosts from '@/libs/client/hooks/posts';
-import { FullPost, SimplePost } from '@/model/post';
+import { Comment, FullPost, SimplePost } from '@/model/post';
 import Image from 'next/image';
 import useSWR from 'swr';
 import ActionBar from './ActionBar';
@@ -12,13 +14,18 @@ type Props = {
 };
 
 export default function PostDetail({ post }: Props) {
-  const { id, userImage, username, image } = post;
-  const { data, isLoading: loading } = useSWR<FullPost>(`/api/posts/${id}`);
+  const { userImage, username, image } = post;
+  const { post: data, postComment } = useFullPost(post.id);
   const comments = data?.comments;
-
-  const { postComment } = usePosts();
+  const { user } = useMe();
   function handlePostComment(comment: string) {
-    postComment(post, comment);
+    if (!user) return;
+    const commentInfo: Comment = {
+      comment,
+      username: user?.username,
+      image: user?.image!,
+    };
+    postComment(commentInfo);
   }
 
   return (

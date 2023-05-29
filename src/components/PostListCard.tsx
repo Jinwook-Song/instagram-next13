@@ -5,7 +5,6 @@ import { SimplePost } from '@/model/post';
 import Image from 'next/image';
 import { useState } from 'react';
 import ActionBar from './ActionBar';
-import Avatar from './Avatar';
 import CommentForm from './CommentForm';
 import PostDetail from './PostDetail';
 import PostModal from './PostModal';
