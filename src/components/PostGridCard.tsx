@@ -11,13 +11,8 @@ import ModalPortal from './ui/ModalPortal';
 type Props = {
   post: SimplePost;
   priority?: boolean;
-  cacheKey?: string;
 };
-export default function PostGridCard({
-  post,
-  priority = false,
-  cacheKey,
-}: Props) {
+export default function PostGridCard({ post, priority = false }: Props) {
   const [showModal, setShowModal] = useState(false);
   const { image, username } = post;
 
@@ -45,7 +40,7 @@ export default function PostGridCard({
       {showModal && (
         <ModalPortal>
           <PostModal onClose={() => setShowModal(false)}>
-            <PostDetail post={post} cacheKey={cacheKey} />
+            <PostDetail post={post} />
           </PostModal>
         </ModalPortal>
       )}

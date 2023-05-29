@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { Comment, SimplePost } from '@/model/post';
 import useSWR from 'swr';
+import { useCacheKeys } from '@/context/CacheKeysContext';
 
 async function updateLike(id: string, like: boolean) {
   return fetch('/api/likes', {
@@ -20,14 +21,14 @@ async function addComment(id: string, comment: string) {
  * bound mutation & optimistic ui
  * @see https://swr.vercel.app/ko/docs/mutation#parameters
  */
-export default function usePosts(cacheKey: string = '/api/posts') {
-  console.log(cacheKey);
+export default function usePosts() {
+  const cacheKeys = useCacheKeys();
   const {
     data: posts,
     isLoading,
     error,
     mutate,
-  } = useSWR<SimplePost[]>(cacheKey);
+  } = useSWR<SimplePost[]>(cacheKeys.postsKey);
 
   const setLike = useCallback(
     (post: SimplePost, username: string, like: boolean) => {
