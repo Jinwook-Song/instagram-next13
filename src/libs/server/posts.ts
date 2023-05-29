@@ -87,3 +87,35 @@ export async function getSavedPostsOf(username: string) {
     )
     .then(mapPosts);
 }
+
+/**
+ * @see https://www.sanity.io/docs/js-client#adding-elements-to-an-array
+ * @param postId
+ * @param userId
+ * @returns
+ */
+export async function likePost(postId: string, userId: string) {
+  return client
+    .patch(postId)
+    .setIfMissing({ likes: [] })
+    .append('likes', [
+      {
+        _ref: userId,
+        _type: 'reference',
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
+}
+
+/**
+ * @see https://www.sanity.io/docs/js-client#deleting-an-element-from-an-array
+ * @param postId
+ * @param userId
+ * @returns
+ */
+export async function dislikePost(postId: string, userId: string) {
+  return client
+    .patch(postId)
+    .unset([`likes[_ref=="${userId}"]`])
+    .commit();
+}
