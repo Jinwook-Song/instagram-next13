@@ -1,6 +1,6 @@
 'use client';
 
-import useMe from '@/libs/client/hooks/me';
+import useMe from '@/libs/client/hooks/useMe';
 import { ProfileUser } from '@/model/user';
 import Button from './ui/Button';
 type Props = {

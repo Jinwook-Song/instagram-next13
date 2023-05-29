@@ -1,6 +1,6 @@
 'use client';
 
-import useMe from '@/libs/client/hooks/me';
+import useMe from '@/libs/client/hooks/useMe';
 import Link from 'next/link';
 import { PropagateLoader } from 'react-spinners';
 import Avatar from './Avatar';

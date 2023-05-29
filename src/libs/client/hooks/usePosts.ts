@@ -1,4 +1,4 @@
-import { SimplePost } from '@/model/post';
+import { Comment, SimplePost } from '@/model/post';
 import useSWR from 'swr';
 
 async function updateLike(id: string, like: boolean) {
@@ -44,7 +44,7 @@ export default function usePosts() {
     });
   };
 
-  const postComment = (post: SimplePost, comment: string) => {
+  const postComment = (post: SimplePost, { comment }: Comment) => {
     const newPost = {
       ...post,
       comments: post.comments + 1,

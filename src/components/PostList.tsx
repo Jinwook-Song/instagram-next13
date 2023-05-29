@@ -1,6 +1,6 @@
 'use client';
 
-import usePosts from '@/libs/client/hooks/posts';
+import usePosts from '@/libs/client/hooks/usePosts';
 import PostListCard from './PostListCard';
 import GridSpinner from './ui/GridSpinner';
 
