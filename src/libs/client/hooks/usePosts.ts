@@ -20,13 +20,14 @@ async function addComment(id: string, comment: string) {
  * bound mutation & optimistic ui
  * @see https://swr.vercel.app/ko/docs/mutation#parameters
  */
-export default function usePosts() {
+export default function usePosts(cacheKey: string = '/api/posts') {
+  console.log(cacheKey);
   const {
     data: posts,
     isLoading,
     error,
     mutate,
-  } = useSWR<SimplePost[]>('/api/posts');
+  } = useSWR<SimplePost[]>(cacheKey);
 
   const setLike = useCallback(
     (post: SimplePost, username: string, like: boolean) => {

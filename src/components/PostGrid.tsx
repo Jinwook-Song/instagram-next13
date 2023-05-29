@@ -1,3 +1,4 @@
+import usePosts from '@/libs/client/hooks/usePosts';
 import { SimplePost } from '@/model/post';
 import useSWR from 'swr';
 import PostGridCard from './PostGridCard';
@@ -9,20 +10,21 @@ type Props = {
 };
 
 export default function PostGrid({ username, query }: Props) {
-  const {
-    data: posts,
-    isLoading: loading,
-    error,
-  } = useSWR<SimplePost[]>(`/api/users/${username}/${query}`);
+  const cacheKey = `/api/users/${username}/${query}`;
+  const { posts, isLoading } = usePosts(cacheKey);
 
   return (
     <div className='w-full text-center'>
-      {loading && <GridSpinner />}
+      {isLoading && <GridSpinner />}
       <ul className='grid grid-cols-3 gap-4 px-8 py-4'>
         {posts &&
           posts.map((post, idx) => (
             <li key={post.id}>
-              <PostGridCard post={post} priority={idx < 6} />
+              <PostGridCard
+                post={post}
+                priority={idx < 6}
+                cacheKey={cacheKey}
+              />
             </li>
           ))}
       </ul>
