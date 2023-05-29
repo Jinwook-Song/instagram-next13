@@ -11,6 +11,7 @@ export const authOptions: NextAuthOptions = {
     }),
     // ...add more providers here
   ],
+  // https://next-auth.js.org/configuration/callbacks
   callbacks: {
     async signIn({ user: { id, email, name, image } }) {
       if (!email) return false;
@@ -36,6 +37,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    //
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;

@@ -4,6 +4,7 @@ import { client, urlFor } from '@/sanity/lib/client';
 function mapPosts(posts: SimplePost[]) {
   return posts.map((post) => ({
     ...post,
+    likes: post.likes ?? [],
     image: urlFor({ source: post.image }),
   }));
 }
