@@ -8,6 +8,14 @@ async function updateBookmark(postId: string, bookmark: boolean) {
     body: JSON.stringify({ id: postId, bookmark }),
   }).then((res) => res.json());
 }
+
+async function updateFollow(targetId: string, follow: boolean) {
+  return fetch('/api/follow', {
+    method: 'PUT',
+    body: JSON.stringify({ id: targetId, follow }),
+  }).then((res) => res.json());
+}
+
 /**
  * bound mutation & optimistic ui
  * @see https://swr.vercel.app/ko/docs/mutation#parameters
@@ -36,5 +44,14 @@ export default function useMe() {
     [mutate, user]
   );
 
-  return { user, isLoading, error, setBookmark };
+  const toggleFollow = useCallback(
+    (targetId: string, follow: boolean) => {
+      return mutate(updateFollow(targetId, follow), {
+        populateCache: false, // updateFollow가 return한 값으로 cache 업데이트 X
+      });
+    },
+    [mutate]
+  );
+
+  return { user, isLoading, error, setBookmark, toggleFollow };
 }
