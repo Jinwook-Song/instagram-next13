@@ -1,3 +1,4 @@
+import usePosts from '@/libs/client/hooks/posts';
 import { FullPost, SimplePost } from '@/model/post';
 import Image from 'next/image';
 import useSWR from 'swr';
@@ -11,9 +12,15 @@ type Props = {
 };
 
 export default function PostDetail({ post }: Props) {
-  const { id, userImage, username, image, createdAt, likes } = post;
+  const { id, userImage, username, image } = post;
   const { data, isLoading: loading } = useSWR<FullPost>(`/api/posts/${id}`);
   const comments = data?.comments;
+
+  const { postComment } = usePosts();
+  function handlePostComment(comment: string) {
+    postComment(post, comment);
+  }
+
   return (
     <section className='flex flex-col sm:flex-row w-full h-full'>
       <div className='relative basis-3/5'>
@@ -47,7 +54,7 @@ export default function PostDetail({ post }: Props) {
             )}
         </ul>
         <ActionBar post={post} />
-        <CommentForm />
+        <CommentForm onPostComment={handlePostComment} />
       </div>
     </section>
   );
