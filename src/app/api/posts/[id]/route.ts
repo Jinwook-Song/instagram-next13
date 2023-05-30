@@ -10,7 +10,7 @@ export async function GET(
   req: NextRequest,
   { params: { id: postId } }: Context
 ) {
-  withSessionUser(async (user) => {
+  return withSessionUser(async () => {
     return getPost(postId) //
       .then((data) => NextResponse.json(data));
   });

@@ -3,7 +3,7 @@ import { follow, unfollow } from '@/libs/server/user';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PUT(req: NextRequest) {
-  withSessionUser(async (user) => {
+  return withSessionUser(async (user) => {
     const { id: targetId, follow: isFollow } = await req.json();
 
     if (!targetId || isFollow === undefined) {

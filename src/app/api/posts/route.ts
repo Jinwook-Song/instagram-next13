@@ -3,14 +3,14 @@ import { createPost, getFollowingPostsOf } from '@/libs/server/posts';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
-  withSessionUser(async (user) => {
+  return withSessionUser(async (user) => {
     return getFollowingPostsOf(user.username) //
       .then((data) => NextResponse.json(data));
   });
 }
 
 export async function POST(req: NextRequest) {
-  withSessionUser(async (user) => {
+  return withSessionUser(async (user) => {
     const form = await req.formData();
     const text = form.get('text')?.toString();
     const file = form.get('file') as Blob;

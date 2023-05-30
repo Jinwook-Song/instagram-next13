@@ -3,7 +3,7 @@ import { dislikePost, likePost } from '@/libs/server/posts';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PUT(req: NextRequest) {
-  withSessionUser(async (user) => {
+  return withSessionUser(async (user) => {
     const { id: postId, like } = await req.json();
 
     if (!postId || like === undefined) {

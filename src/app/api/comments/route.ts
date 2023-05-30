@@ -3,7 +3,7 @@ import { addComment } from '@/libs/server/posts';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  withSessionUser(async (user) => {
+  return withSessionUser(async (user) => {
     const { id: postId, comment } = await req.json();
 
     if (!postId || comment === undefined) {
