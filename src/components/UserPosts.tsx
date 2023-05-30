@@ -12,9 +12,17 @@ type Props = {
 };
 
 const tabs = [
-  { type: 'posts', icon: <PostIcon /> },
-  { type: 'saved', icon: <BookmarkIcon className='w-3 aspect-square' /> },
-  { type: 'liked', icon: <HeartIcon className='w-3 aspect-square' /> },
+  { type: 'posts', icon: <PostIcon />, title: 'Posts' },
+  {
+    type: 'saved',
+    icon: <BookmarkIcon className='w-3 aspect-square' />,
+    title: 'Bookmarked',
+  },
+  {
+    type: 'liked',
+    icon: <HeartIcon className='w-3 aspect-square' />,
+    title: 'Likeed',
+  },
 ];
 
 export default function UserPosts({ user }: Props) {
@@ -24,7 +32,7 @@ export default function UserPosts({ user }: Props) {
   return (
     <section>
       <ul className='flex justify-center uppercase gap-x-12'>
-        {tabs.map(({ type, icon }) => (
+        {tabs.map(({ type, icon, title }) => (
           <li
             className={cls(
               'p-4 cursor-pointer transition-colors flex items-center gap-x-2',
@@ -33,7 +41,9 @@ export default function UserPosts({ user }: Props) {
             onClick={() => setQuery(type)}
             key={type}
           >
-            <button className='scale-150 md:scale-100'>{icon}</button>
+            <button className='scale-150 md:scale-100' aria-label={title}>
+              {icon}
+            </button>
             <span className='hidden md:inline'>{type}</span>
           </li>
         ))}

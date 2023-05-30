@@ -46,7 +46,7 @@ export default function PostListCard({ post, priority = false }: Props) {
         )}
         {comments > 1 && (
           <button
-            className='font-semibold my-2 text-sky-500'
+            className='font-semibold my-2 text-sky-600'
             onClick={() => setShowModal(true)}
           >{`View all ${comments} comments`}</button>
         )}
