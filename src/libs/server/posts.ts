@@ -1,5 +1,6 @@
 import { SimplePost, FullPost } from '@/model/post';
-import { client, urlFor } from '@/sanity/lib/client';
+import { token } from '@/sanity/env';
+import { assetsURL, client, urlFor } from '@/sanity/lib/client';
 
 function mapPosts(posts: SimplePost[]) {
   return posts.map((post) => ({
@@ -139,4 +140,33 @@ export async function addComment(
       },
     ])
     .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function createPost(userId: string, text: string, file: Blob) {
+  return fetch(assetsURL, {
+    method: 'POST',
+    headers: {
+      'content-type': file.type,
+      authorization: `Bearer ${token}`,
+    },
+    body: file,
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      return client.create(
+        {
+          _type: 'post',
+          author: { _ref: userId },
+          photo: { asset: { _ref: result.document._id } },
+          comments: [
+            {
+              comment: text,
+              author: { _ref: userId, _type: 'reference' },
+            },
+          ],
+          likes: [],
+        },
+        { autoGenerateArrayKeys: true }
+      );
+    });
 }

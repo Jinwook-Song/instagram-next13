@@ -24,3 +24,8 @@ type UrlInput = {
 export function urlFor({ source, width = 800 }: UrlInput) {
   return imageUrlBuilder(client).image(source).width(width).url();
 }
+
+/**
+ * @see https://www.sanity.io/docs/http-api-assets#eebea611acef
+ */
+export const assetsURL = `https://${projectId}.api.sanity.io/v${apiVersion}/assets/images/${dataset}`;

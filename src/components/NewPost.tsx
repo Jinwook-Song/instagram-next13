@@ -55,7 +55,7 @@ export default function NewPost({ user: { username, image } }: Props) {
 
     const formData = new FormData();
     formData.append('file', file!);
-    formData.append('text', textRef.current?.value!);
+    formData.append('text', textRef.current?.value ?? '');
 
     fetch('/api/posts/', {
       method: 'POST',
@@ -152,7 +152,7 @@ export default function NewPost({ user: { username, image } }: Props) {
           text='Publish'
           accentColor='royalblue'
           onClick={() => {}}
-          disabled={!file || !textRef.current?.value}
+          disabled={!file}
         />
       </form>
     </section>
